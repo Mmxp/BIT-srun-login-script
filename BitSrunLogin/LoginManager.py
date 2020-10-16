@@ -16,12 +16,12 @@ header={
 		
 class LoginManager:
 	def __init__(self,
-		url_login_page = "http://222.204.3.154/srun_portal_success?ac_id=5&theme=basic1",
-		url_get_challenge_api = "http://222.204.3.154/cgi-bin/get_challenge",
-		url_login_api = "http://222.204.3.154/cgi-bin/srun_portal",
+		url_login_page = "http://*/srun_portal_success?ac_id=5&theme=basic1",
+		url_get_challenge_api = "http://*/cgi-bin/get_challenge",
+		url_login_api = "http://*/cgi-bin/srun_portal",
 		n = "200",
 		vtype = "1",
-		acid = "1",
+		acid = "5",
 		enc = "srun_bx1"
 	):
 		# urls
@@ -36,7 +36,7 @@ class LoginManager:
 		self.enc = enc
 
 	def login(self, username, password):
-		self.username = username
+		self.username = username+"@cmcc"
 		self.password = password
 
 		self.get_ip()
@@ -146,7 +146,7 @@ class LoginManager:
 	@checkmd5
 	def _encrypt_md5(self):
 		self.encrypted_md5 = "{MD5}" + self.md5
-
+	
 	@checktoken
 	@checkip
 	@checkencryptedinfo
@@ -183,7 +183,7 @@ class LoginManager:
 	)
 	def _send_login_info(self):
 		login_info_params = {
-			'callback': 'jsonp1583251661368', # This value can be any string, but cannot be absent
+			'callback': 'jQuery1124011576657442209481_1602812074032', # This value can be any string, but cannot be absent
 			'action':'login',
 			'username': self.username,
 			'password': self.encrypted_md5,
@@ -192,7 +192,11 @@ class LoginManager:
 			'info': self.encrypted_info,
 			'chksum': self.encrypted_chkstr,
 			'n': self.n,
-			'type': self.vtype
+			'type': self.vtype,
+      'os': 'Windows+10',
+      'name': 'windows',
+      'double_stack': '0',
+      '_': '1602812428675'
 		}
 		self._login_responce = requests.get(self.url_login_api, params=login_info_params, headers=header)
 	
@@ -203,7 +207,8 @@ class LoginManager:
 	@infomanage(
 		callinfo = "Resolving login result",
 		successinfo = "Login result successfully resolved",
-		errorinfo = "Cannot resolve login result. Maybe the srun response format is changed"
+		errorinfo = "Login resolved failed"
 	)
 	def _resolve_login_responce(self):
-		self._login_result = re.search('"suc_msg":"(.*?)"', self._login_responce.text).group(1)
+		self._login_result = re.search('"error_msg":"(.+)"', self._login_responce.text).group(1)
+		
