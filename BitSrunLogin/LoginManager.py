@@ -16,9 +16,9 @@ header={
 		
 class LoginManager:
 	def __init__(self,
-		url_login_page = "http://10.0.0.55/srun_portal_pc?ac_id=8&theme=bit",
-		url_get_challenge_api = "http://10.0.0.55/cgi-bin/get_challenge",
-		url_login_api = "http://10.0.0.55/cgi-bin/srun_portal",
+		url_login_page = "http://222.204.3.154/srun_portal_success?ac_id=5&theme=basic1",
+		url_get_challenge_api = "http://222.204.3.154/cgi-bin/get_challenge",
+		url_login_api = "http://222.204.3.154/cgi-bin/srun_portal",
 		n = "200",
 		vtype = "1",
 		acid = "1",
